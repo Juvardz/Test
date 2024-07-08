@@ -13,10 +13,10 @@ public class SoundManager : MonoBehaviour
 
   private static SoundManager _instance;
 
-private void Start()
-{
+  private void Start()
+  {
     Playmusic("Theme");
-}
+  }
   private void Awake()
   {
     _instance = this;
