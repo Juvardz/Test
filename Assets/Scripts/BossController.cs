@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class BossController : MonoBehaviour
 {
-    // 5 PLAYER BULLETS DESTROYS BOSS => 10 PUNTOS
-    // (Parecido a los acumuladores de puntos, con una sola bala del boss te destruyen)
-
     [Header("Stats")]
     [SerializeField]
     private float points;
@@ -28,7 +25,8 @@ public class BossController : MonoBehaviour
         if (health <= 0)
         {
             UIController.Instance.IncreaseScore(points); 
-            Destroy(gameObject); 
+            Destroy(gameObject);
+            LevelManager.Instance.GameWinnerLevel(); // Cargar la escena de ganador
         }
     }
 

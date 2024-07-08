@@ -1,14 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    // https://www.dafont.com/
-    // FIND A FONT TO USE IT ON THE TEXTMESHPRO CONTROLS => 10 PUNTOS
-
     [SerializeField]
     TextMeshProUGUI scoreTextbox;
 
@@ -18,14 +14,16 @@ public class UIController : MonoBehaviour
     [SerializeField]
     float gameOverSleep;
 
-    bool hasLives = true;
-
     private static UIController _instance;
 
     private void Awake()
     {
-        // IMPLEMENT Singleton (instance) TO INVOKE IncreaseScore => 10 PUNTOS
         _instance = this;
+    }
+
+    public static UIController Instance
+    {
+        get { return _instance; }
     }
 
     public void IncreaseScore(float points)
@@ -35,55 +33,38 @@ public class UIController : MonoBehaviour
         scoreTextbox.text = score.ToString();
     }
 
+    public void UpdateScore(int score)
+    {
+        scoreTextbox.text = score.ToString();
+    }
+
+    public void UpdateLives(int lives)
+    {
+        Image[] liveImages = livesContainer.GetComponentsInChildren<Image>();
+        for (int i = 0; i < liveImages.Length; i++)
+        {
+            liveImages[i].enabled = i < lives;
+        }
+    }
+
     public void DecreaseLives()
     {
-        int maxLiveNumber = 0;
-        int liveNumber = 0;
-        Image [] liveImages= livesContainer.GetComponentsInChildren<Image>();
-        Image maxLiveImage = null;
-        
-        foreach (Image liveImage in liveImages)
-        {
-            if (liveImage.name.StartsWith("Live-") && liveImage.enabled)
-            {
-                liveNumber = int.Parse(liveImage.name.Remove(0, 5));
-
-                if (maxLiveNumber == 0 || liveNumber > maxLiveNumber)
-                {
-                    maxLiveNumber = liveNumber;
-                    maxLiveImage = liveImage;
-                }
-            }
-        }
-
-        if(maxLiveImage != null)
-        {
-            maxLiveImage.enabled = false;
-        }
-        
-        hasLives = maxLiveNumber > 0;
-
-    }
-    
-    public static UIController Instance
-    {
-        get {return _instance;}
+        LevelManager.Instance.DecreaseLives();
     }
 
     public bool HasLives()
     {
-        return hasLives;
+        return LevelManager.Instance.GetLives() > 0;
     }
 
     private IEnumerator EndGame()
     {
         yield return new WaitForSeconds(gameOverSleep);
-        LevelManager levelManager = FindObjectOfType<LevelManager>();
-        levelManager.LastLevel();
+        LevelManager.Instance.GameOverLevel();
     }
 
     public void GameOver()
     {
-        EndGame();
+        StartCoroutine(EndGame());
     }
 }

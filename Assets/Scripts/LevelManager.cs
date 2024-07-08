@@ -6,7 +6,10 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
-    
+
+    private int currentLives = 3;
+    private int currentScore = 0;
+
     private void Awake()
     {
         if (Instance == null)
@@ -19,47 +22,91 @@ public class LevelManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
+
     public void Reload()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (UIController.Instance != null)
+        {
+            UIController.Instance.UpdateLives(currentLives);
+            UIController.Instance.UpdateScore(currentScore); // Actualiza el puntaje en la UI
+        }
     }
 
     private void LoadLevel(int levelNo)
     {
         SceneManager.LoadScene(levelNo);
+        if (UIController.Instance != null)
+        {
+            UIController.Instance.UpdateScore(currentScore); // Actualiza el puntaje en la UI
+        }
     }
 
     public void FirstLevel()
     {
-        int levelNo = 0;
-        LoadLevel(levelNo);
+        LoadLevel(1); // Assuming 1 is the index for the first level
     }
 
-    public void LastLevel()
+    public void WelcomeLevel()
     {
-        int levelNo = SceneManager.sceneCountInBuildSettings - 1;
-        LoadLevel(levelNo);
+        LoadLevel(0); // Assuming 0 is the index for the welcome scene
     }
 
-    public void NextLevel()
+    public void BossLevel()
     {
-        int levelNo = SceneManager.GetActiveScene().buildIndex + 1;
-        if (levelNo > SceneManager.sceneCountInBuildSettings - 1)
+        LoadLevel(2); // Assuming 2 is the index for the boss level
+    }
+
+    public void GameWinnerLevel()
+    {
+        LoadLevel(3); // Assuming 3 is the index for the game winner scene
+    }
+
+    public void GameOverLevel()
+    {
+        LoadLevel(4); // Assuming 4 is the index for the game over scene
+    }
+
+    public void IncreaseScore(int points)
+    {
+        currentScore += points;
+        if (UIController.Instance != null)
         {
-            levelNo = SceneManager.sceneCountInBuildSettings - 1;
+            UIController.Instance.UpdateScore(currentScore);
         }
-        LoadLevel(levelNo);
+
+        if (currentScore >= 50 && SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            BossLevel();
+        }
     }
 
-    public void PreviousLevel()
+    public void DecreaseLives()
     {
-        int levelNo = SceneManager.GetActiveScene().buildIndex - 1;
-        if (levelNo < 0)
+        currentLives--;
+        if (currentLives <= 0)
         {
-            levelNo = 0;
+            GameOverLevel();
         }
-        LoadLevel(levelNo);
+        else
+        {
+            Reload();
+        }
+    }
+
+    public void ResetLives()
+    {
+        currentLives = 3;
+    }
+
+    public int GetLives()
+    {
+        return currentLives;
+    }
+
+    public int GetScore()
+    {
+        return currentScore;
     }
 
     public void Quit()

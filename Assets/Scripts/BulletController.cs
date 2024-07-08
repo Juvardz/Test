@@ -20,25 +20,23 @@ public class BulletController : MonoBehaviour
         _rigidbody.velocity = _direction * speed * Time.deltaTime;
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            CentinelController controller = other.gameObject.GetComponent<CentinelController>();
-
-            // IMPLEMENTS GetPoints ON CentinelController => 10 PUNTOS
-            float points = controller.GetPoints();
-            UIController.Instance.IncreaseScore(points);
-            Destroy(other.gameObject);
-        }
-
-        if (other.gameObject.CompareTag("Boss"))
-        {
-            BossController controller = other.gameObject.GetComponent<BossController>();
-            controller.TakeDamage(1); 
-            Destroy(gameObject); 
-        }
+    if (other.gameObject.CompareTag("Enemy"))
+    {
+        CentinelController controller = other.gameObject.GetComponent<CentinelController>();
+        float points = controller.GetPoints();
+        LevelManager.Instance.IncreaseScore((int)points);
+        Destroy(other.gameObject);
     }
+    else if (other.gameObject.CompareTag("Boss"))
+    {
+        BossController controller = other.gameObject.GetComponent<BossController>();
+        controller.TakeDamage(1);
+        Destroy(gameObject);
+    }
+    }
+
 
     public void SetDirection(Vector2 direction)
     {
