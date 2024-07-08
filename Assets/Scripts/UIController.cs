@@ -26,7 +26,7 @@ public class UIController : MonoBehaviour
         get { return _instance; }
     }
 
-#region Score
+    #region Score
     public void IncreaseScore(float points)
     {
         float score = float.Parse(scoreTextbox.text);
@@ -38,9 +38,9 @@ public class UIController : MonoBehaviour
     {
         scoreTextbox.text = score.ToString();
     }
-#endregion
+    #endregion
 
-#region Lives
+    #region Lives
     public void UpdateLives(int lives)
     {
         Image[] liveImages = livesContainer.GetComponentsInChildren<Image>();
@@ -52,6 +52,29 @@ public class UIController : MonoBehaviour
 
     public void DecreaseLives()
     {
+        int maxLiveNumber = 0;
+        int liveNumber = 0;
+        Image[] liveImages = livesContainer.GetComponentsInChildren<Image>();
+        Image maxLiveImage = null;
+
+        foreach (Image liveImage in liveImages)
+        {
+            if (liveImage.name.StartsWith("Live-") && liveImage.enabled)
+            {
+                liveNumber = int.Parse(liveImage.name.Remove(0, 5));
+                if (maxLiveNumber == 0 || liveNumber > maxLiveNumber)
+                {
+                    maxLiveNumber = liveNumber;
+                    maxLiveImage = liveImage;
+                }
+            }
+        }
+
+        if (maxLiveImage != null)
+        {
+            maxLiveImage.enabled = false;
+        }
+
         LevelManager.Instance.DecreaseLives();
     }
 
@@ -59,7 +82,8 @@ public class UIController : MonoBehaviour
     {
         return LevelManager.Instance.GetLives() > 0;
     }
-#endregion
+    #endregion
+
     private IEnumerator EndGame()
     {
         yield return new WaitForSeconds(gameOverSleep);
