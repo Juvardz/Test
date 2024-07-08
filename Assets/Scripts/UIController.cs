@@ -6,65 +6,84 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-
-
     // https://www.dafont.com/
-    //FIND A FONT AN APPLY TO THE TEXTNESHPRO => 10 PUNTOS
-   [SerializeField]
-   TextMeshProUGUI scoreTextbox;
+    // FIND A FONT TO USE IT ON THE TEXTMESHPRO CONTROLS => 10 PUNTOS
 
-   [SerializeField]
-   Transform livesContainer;
+    [SerializeField]
+    TextMeshProUGUI scoreTextbox;
 
-   bool hasLives = true;
+    [SerializeField]
+    Transform livesContainer;
+
+    [SerializeField]
+    float gameOverSleep;
+
+    bool hasLives = true;
+
     private static UIController _instance;
-   private void Awake()
-   {
-    //Implement Singleton (instance) TO INVOKE IncreaseScore => 10 PUNTOS
-    _instance = this;
-   }
 
-   public void IncreaseScore(float points)
-   {
-    float score = float.Parse(scoreTextbox.text);
-    score += points;
-    scoreTextbox.text = score.ToString();
-   }
-
-   public void DecreaseLives()
-   {
-    int maxLiveNumber = 0;
-    int liveNumber = 0;
-    Image [] liveImages= livesContainer.GetComponentsInChildren<Image>();
-    Image maxLiveImage = null;
-
-    foreach(Image liveImage in liveImages)
+    private void Awake()
     {
-        if(liveImage.name.StartsWith("Live-") && liveImage.enabled)
+        // IMPLEMENT Singleton (instance) TO INVOKE IncreaseScore => 10 PUNTOS
+        _instance = this;
+    }
+
+    public void IncreaseScore(float points)
+    {
+        float score = float.Parse(scoreTextbox.text);
+        score += points;
+        scoreTextbox.text = score.ToString();
+    }
+
+    public void DecreaseLives()
+    {
+        int maxLiveNumber = 0;
+        int liveNumber = 0;
+        Image [] liveImages= livesContainer.GetComponentsInChildren<Image>();
+        Image maxLiveImage = null;
+        
+        foreach (Image liveImage in liveImages)
         {
-            liveNumber = int.Parse(liveImage.name.Remove(0, 5));
-            if(maxLiveNumber == 0 || liveNumber > maxLiveNumber)
+            if (liveImage.name.StartsWith("Live-") && liveImage.enabled)
             {
-                maxLiveNumber = liveNumber;
-                maxLiveImage = liveImage;
+                liveNumber = int.Parse(liveImage.name.Remove(0, 5));
+
+                if (maxLiveNumber == 0 || liveNumber > maxLiveNumber)
+                {
+                    maxLiveNumber = liveNumber;
+                    maxLiveImage = liveImage;
+                }
             }
         }
+
+        if(maxLiveImage != null)
+        {
+            maxLiveImage.enabled = false;
+        }
+        
+        hasLives = maxLiveNumber > 0;
+
     }
-
-    if(maxLiveImage != null)
-    {
-        maxLiveImage.enabled = false;
-    }
-
-    hasLives = maxLiveNumber > 0;
-
-   }
+    
     public static UIController Instance
     {
         get {return _instance;}
     }
-   public bool HasLives()
-   {
-    return hasLives;
-   }
+
+    public bool HasLives()
+    {
+        return hasLives;
+    }
+
+    private IEnumerator EndGame()
+    {
+        yield return new WaitForSeconds(gameOverSleep);
+        LevelManager levelManager = FindObjectOfType<LevelManager>();
+        levelManager.LastLevel();
+    }
+
+    public void GameOver()
+    {
+        EndGame();
+    }
 }

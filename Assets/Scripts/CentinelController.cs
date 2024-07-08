@@ -17,8 +17,6 @@ public class CentinelController : MonoBehaviour
 
             Destroy(gameObject);
         }
-
-      
     }
 
     public float GetPoints()

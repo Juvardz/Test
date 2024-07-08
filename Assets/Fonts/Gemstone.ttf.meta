@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f208f6020ff3343eabaab8f1a1cc87b5
+guid: ccf25c6f25ed82447970bd8ece072fbd
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - invaders from space
+  - Gemstone
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

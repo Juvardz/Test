@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class BossController : MonoBehaviour
 {
-   [Header("Stats")]
+    // 5 PLAYER BULLETS DESTROYS BOSS => 10 PUNTOS
+    // (Parecido a los acumuladores de puntos, con una sola bala del boss te destruyen)
+
+    [Header("Stats")]
     [SerializeField]
     private float points;
 
     private int health = 5; 
-
     
     private void OnTriggerEnter2D(Collider2D other)
     {

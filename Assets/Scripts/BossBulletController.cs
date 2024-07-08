@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossBullController : MonoBehaviour
+public class BossBulletController : MonoBehaviour
 {
-      [SerializeField]
+    [SerializeField]
     float speed;
 
     Rigidbody2D _rigidbody;
@@ -15,6 +15,7 @@ public class BossBullController : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
     }
+
     void Start()
     {
         _rigidbody.velocity = _direction * speed * Time.deltaTime;
@@ -22,21 +23,13 @@ public class BossBullController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-       
-        
-            if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             SpaceshipController controller = other.gameObject.GetComponent<SpaceshipController>();
             controller.Die();
 
             Destroy(gameObject);
         }
-
-            
-
-
-
-        
     }
     public void SetDirection(Vector2 direction)
     {

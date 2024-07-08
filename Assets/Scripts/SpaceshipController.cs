@@ -88,6 +88,7 @@ public class SpaceshipController : MonoBehaviour
     private void HandleFire()
     {
         _fireTimer -= Time.deltaTime;
+
         if (Input.GetButton("Fire1"))
         {
             if(_fireTimer > 0)
@@ -108,7 +109,6 @@ public class SpaceshipController : MonoBehaviour
             SoundManager.Instance.PlaySFX(fireSoundSFX);
         }
     }
-
     #endregion
 
     #region Rotation
@@ -205,23 +205,23 @@ public class SpaceshipController : MonoBehaviour
     #endregion
 
     #region Die
-
     public void Die()
     {
-     Collider2D collider = GetComponent<Collider2D>();
-     collider.enabled = false;
+        Collider2D collider = GetComponent<Collider2D>();
+        collider.enabled = false;
 
-     SpaceshipController controller = GetComponent<SpaceshipController>();
-     controller.enabled = false;
+        SpaceshipController controller = GetComponent<SpaceshipController>();
+        controller.enabled = false;
 
-     StartCoroutine(DieCoroutine());
+        StartCoroutine(DieCoroutine());
     }
 
     private IEnumerator DieCoroutine()
     {
         SpriteRenderer render = GetComponentInChildren<SpriteRenderer>();
         Color color = render.color;
-        while(color.a > 0.0F)
+
+        while (color.a > 0.0F)
         {
             color.a -= 0.1F;
             render.color = color;
@@ -230,13 +230,22 @@ public class SpaceshipController : MonoBehaviour
 
         yield return new WaitForSeconds(spawnWaitTime);
 
-        //MOVE TO LEVELMANAGER AS RELOAD => 10 PUNTOS
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // MOVE TO LevelManager AS Reload() => 10 PUNTOS
+        // SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        LevelManager.Instance.Reload();
 
         UIController.Instance.DecreaseLives();
-        //GO TO GAMEOVER WHEN HasLives IS FALSE => 10 PUNTOS
+        // GO TO GAMEOVER WHEN HasLives IS FALSE => 10 PUNTOS
+        if (!UIController.Instance.HasLives())
+        {
+            StartCoroutine();
+        }        
     }
-
     #endregion
+
+    private void StartCoroutine()
+    {
+        UIController.Instance.GameOver();
+        return;
+    }
 }

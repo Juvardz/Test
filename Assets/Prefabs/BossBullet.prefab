@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4841602312691198904}
   - component: {fileID: 6042899867771331021}
   m_Layer: 0
-  m_Name: Boss Bull
+  m_Name: BossBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,9 +121,9 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.09, y: 0.54}
-  m_Direction: 0
+  m_Offset: {x: -0.0010563732, y: 0.00029589253}
+  m_Size: {x: 0.5695988, y: 0.12944822}
+  m_Direction: 1
 --- !u!114 &6042899867771331021
 MonoBehaviour:
   m_ObjectHideFlags: 0

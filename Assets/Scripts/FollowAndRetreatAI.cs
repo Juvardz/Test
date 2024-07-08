@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class FollowAndRetreatAI : MonoBehaviour
 {
-   [SerializeField]
-   Transform target;
+    [SerializeField]
+    Transform target;
 
-   [SerializeField]
-   float speed;
+    [SerializeField]
+    float speed;
 
-   [SerializeField]
-   float stopDistance;
+    [SerializeField]
+    float stopDistance;
 
-   [SerializeField]
-   float retreatDistance;
+    [SerializeField]
+    float retreatDistance;
 
-   [Header("Fire")]
+    [Header("Fire")]
     [SerializeField]
     Transform firePoint;
 
@@ -31,7 +31,7 @@ public class FollowAndRetreatAI : MonoBehaviour
 
     float _fireTimer;
 
-   Rigidbody2D _rigidbody;
+    Rigidbody2D _rigidbody;
 
    private void Awake()
    {
@@ -39,42 +39,36 @@ public class FollowAndRetreatAI : MonoBehaviour
         _fireTimer = firetimeout;
    }
 
-#region FixedUpdate
+   #region FixedUpdate
     
    private void FixedUpdate()
    {
         float distance = Vector2.Distance(_rigidbody.position, target.position);
 
-        if(distance > stopDistance)
+        if (distance > stopDistance)
         {
             _rigidbody.position = Vector2.MoveTowards(_rigidbody.position, target.position, speed * Time.fixedDeltaTime);
         }
-        else if(distance < retreatDistance)
+        else if (distance < retreatDistance)
         {
             _rigidbody.position = Vector2.MoveTowards(_rigidbody.position, target.position, -speed * Time.fixedDeltaTime);
         }
-        else if(distance < stopDistance && distance > retreatDistance)
+        else if (distance < stopDistance && distance > retreatDistance)
         {
             _rigidbody.position = this._rigidbody.position;
         }
 
         transform.right = target.position - transform.position;
-        //transform.LookAt(target.position);
+        // transform.LookAt(target.position);
 
-        //FIRE TO PLAYER => 40 PUNTOS
+        // FIRE TO PLAYER => 40 PUNTOS
 
         HandleFireBoss();
-
    }
-
-    
-#endregion
+   #endregion
    
-
-#region FireBoss
-    
-
-        private void HandleFireBoss()
+   #region FireBoss
+   private void HandleFireBoss()
     {
         _fireTimer -= Time.deltaTime;
 
@@ -87,14 +81,12 @@ public class FollowAndRetreatAI : MonoBehaviour
 
             Vector2 direction = (firePoint.position - transform.position).normalized;
 
-            BossBullController controller = bullet.GetComponent<BossBullController>();
+            BossBulletController controller = bullet.GetComponent<BossBulletController>();
             controller.SetDirection(direction);
 
             Destroy(bullet, bulletLifeTime);
             _fireTimer = firetimeout;
 
-        }
-
    }
-
-#endregion
+   #endregion
+}

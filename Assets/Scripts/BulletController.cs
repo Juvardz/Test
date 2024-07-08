@@ -25,6 +25,8 @@ public class BulletController : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             CentinelController controller = other.gameObject.GetComponent<CentinelController>();
+
+            // IMPLEMENTS GetPoints ON CentinelController => 10 PUNTOS
             float points = controller.GetPoints();
             UIController.Instance.IncreaseScore(points);
             Destroy(other.gameObject);

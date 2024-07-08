@@ -209,7 +209,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 847616084}
         m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: FirstLevel
+        m_MethodName: NextLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -239,7 +239,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: dbe2229e6918310478df58a97dbd0d7b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d88c5d2fcd63cb04f95fff8703cb583a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -608,7 +608,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcb358e05be5e436587fc46ab2185276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds: []
+  sounds:
+  - name: Welcome
+    audio: {fileID: 8300000, guid: ec734ed6b27e6374a951e4e8faa25a1b, type: 3}
 --- !u!1 &1082879848
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,7 +782,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Start Again
+  m_text: Play Again
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c7a43eec3b1316044a506d4643721783, type: 2}
   m_sharedMaterial: {fileID: 1764555260321770178, guid: c7a43eec3b1316044a506d4643721783, type: 2}
@@ -915,7 +917,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Game Over
+  m_text: You Won!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e65d6508d4bebf84da55ff20c1d5e64a, type: 2}
   m_sharedMaterial: {fileID: 8821574457587881897, guid: e65d6508d4bebf84da55ff20c1d5e64a, type: 2}
@@ -924,8 +926,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4289309144
-  m_fontColor: {r: 0.8470589, g: 0.6627451, b: 0.6627451, a: 1}
+    rgba: 4287290539
+  m_fontColor: {r: 0.67058825, g: 0.86274517, b: 0.5411765, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
