@@ -29,7 +29,7 @@ public class LevelManager : MonoBehaviour
         if (UIController.Instance != null)
         {
             UIController.Instance.UpdateLives(currentLives);
-            UIController.Instance.UpdateScore(currentScore); // Actualiza el puntaje en la UI
+            UIController.Instance.UpdateScore(currentScore); 
         }
     }
 
@@ -38,33 +38,33 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(levelNo);
         if (UIController.Instance != null)
         {
-            UIController.Instance.UpdateScore(currentScore); // Actualiza el puntaje en la UI
+            UIController.Instance.UpdateScore(currentScore); 
         }
     }
 
     public void FirstLevel()
     {
-        LoadLevel(1); // Assuming 1 is the index for the first level
+        LoadLevel(1); 
     }
 
     public void WelcomeLevel()
     {
-        LoadLevel(0); // Assuming 0 is the index for the welcome scene
+        LoadLevel(0); 
     }
 
     public void BossLevel()
     {
-        LoadLevel(2); // Assuming 2 is the index for the boss level
+        LoadLevel(2); 
     }
 
     public void GameWinnerLevel()
     {
-        LoadLevel(3); // Assuming 3 is the index for the game winner scene
+        LoadLevel(3); 
     }
 
     public void GameOverLevel()
     {
-        LoadLevel(4); // Assuming 4 is the index for the game over scene
+        LoadLevel(4); 
     }
 
     public void IncreaseScore(int points)
@@ -75,7 +75,7 @@ public class LevelManager : MonoBehaviour
             UIController.Instance.UpdateScore(currentScore);
         }
 
-        if (currentScore >= 50 && SceneManager.GetActiveScene().buildIndex == 1)
+        if (currentScore >= 50 && SceneManager.GetActiveScene().buildIndex == 1) //50 puntos para pasar al jefe
         {
             BossLevel();
         }

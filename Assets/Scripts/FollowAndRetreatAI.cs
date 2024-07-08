@@ -59,9 +59,6 @@ public class FollowAndRetreatAI : MonoBehaviour
         }
 
         transform.right = target.position - transform.position;
-        // transform.LookAt(target.position);
-
-        // FIRE TO PLAYER => 40 PUNTOS
 
         HandleFireBoss();
    }

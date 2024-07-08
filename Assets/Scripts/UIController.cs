@@ -26,6 +26,7 @@ public class UIController : MonoBehaviour
         get { return _instance; }
     }
 
+#region Score
     public void IncreaseScore(float points)
     {
         float score = float.Parse(scoreTextbox.text);
@@ -37,7 +38,9 @@ public class UIController : MonoBehaviour
     {
         scoreTextbox.text = score.ToString();
     }
+#endregion
 
+#region Lives
     public void UpdateLives(int lives)
     {
         Image[] liveImages = livesContainer.GetComponentsInChildren<Image>();
@@ -56,7 +59,7 @@ public class UIController : MonoBehaviour
     {
         return LevelManager.Instance.GetLives() > 0;
     }
-
+#endregion
     private IEnumerator EndGame()
     {
         yield return new WaitForSeconds(gameOverSleep);
