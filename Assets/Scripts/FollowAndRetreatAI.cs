@@ -69,20 +69,20 @@ public class FollowAndRetreatAI : MonoBehaviour
     {
         _fireTimer -= Time.deltaTime;
 
-            if(_fireTimer > 0.0F)
-            {
-                return;
-            }
+                if(_fireTimer > 0.0F)
+                {
+                    return;
+                }
 
-            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
+                GameObject bullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
 
-            Vector2 direction = (firePoint.position - transform.position).normalized;
+                Vector2 direction = (firePoint.position - transform.position).normalized;
 
-            BossBulletController controller = bullet.GetComponent<BossBulletController>();
-            controller.SetDirection(direction);
+                BossBulletController controller = bullet.GetComponent<BossBulletController>();
+                controller.SetDirection(direction);
 
-            Destroy(bullet, bulletLifeTime);
-            _fireTimer = firetimeout;
+                Destroy(bullet, bulletLifeTime);
+                _fireTimer = firetimeout;
 
    }
    #endregion
