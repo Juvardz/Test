@@ -45,6 +45,7 @@ public class LevelManager : MonoBehaviour
     public void FirstLevel()
     {
         LoadLevel(1); 
+        ResetLives();
     }
 
     public void WelcomeLevel()
